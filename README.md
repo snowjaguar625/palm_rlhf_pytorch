@@ -13,7 +13,6 @@ Alternative: <a href="https://arxiv.org/abs/2302.02676">Chain of Hindsight</a>
 ## FAQ
 
 - Does this contain a model for inference?
-
 There is no trained model. This is just the ship and overall map. We still need millions of dollars of compute + data to sail to the correct point in high dimensional parameter space. Even then, you need professional sailors (like Robin Rombach of Stable Diffusion fame) to actually guide the ship through turbulent times to that point.
 
 ## Community

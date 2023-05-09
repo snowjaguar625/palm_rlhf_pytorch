@@ -12,7 +12,6 @@ from palm_rlhf_pytorch import PaLM
 from accelerate import Accelerator
 
 # constants
-
 NUM_BATCHES = int(1e5)
 BATCH_SIZE = 4
 GRADIENT_ACCUMULATE_EVERY = 4
@@ -24,7 +23,6 @@ GENERATE_LENGTH = 512
 SEQ_LEN = 1024
 
 # helpers
-
 def cycle(loader):
     while True:
         for data in loader:
@@ -38,12 +36,10 @@ def decode_tokens(tokens):
 
 
 # accelerator
-
 accelerator = Accelerator()
 device = accelerator.device
 
 # instantiate palm
-
 model = PaLM(
     num_tokens=256,
     dim=512,
@@ -52,7 +48,6 @@ model = PaLM(
 ).to(device)
 
 # prepare enwik8 data
-
 with gzip.open("./data/enwik8.gz") as file:
     data = np.frombuffer(file.read(int(95e6)), dtype=np.uint8).copy()
     np_train, np_valid = np.split(data, [int(90e6)])
@@ -78,7 +73,6 @@ train_loader = cycle(DataLoader(train_dataset, batch_size=BATCH_SIZE))
 val_loader = cycle(DataLoader(val_dataset, batch_size=BATCH_SIZE))
 
 # optimizer
-
 optim = Lion(model.palm_parameters(), lr = LEARNING_RATE)
 
 model, optim, train_loader, val_loader = accelerator.prepare(
@@ -86,7 +80,6 @@ model, optim, train_loader, val_loader = accelerator.prepare(
 )
 
 # training
-
 for i in tqdm.tqdm(range(NUM_BATCHES), mininterval=10.0, desc="training"):
     model.train()
 
